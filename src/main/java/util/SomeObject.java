@@ -1,14 +1,20 @@
 package util;
 
 import cashes.CacheTop;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 
+@JsonAutoDetect
 public class SomeObject {
 
    // private long id;
 
     private String somevalue;
 
-    protected SomeObject(String somevalue){
+    public SomeObject(){
+
+    }
+
+    public SomeObject(String somevalue){
         //this.id = CacheTop.inc();
         this.somevalue = somevalue;
     }

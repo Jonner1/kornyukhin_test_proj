@@ -8,60 +8,63 @@ public class DTOObject implements Serializable {
 
     private long serialVersionUID = 1;
 
-    private Long lifetime = 10000L;
+    private Long lifetime;
     private long id;
-    private SomeObject someObject;
+   // private SomeObject someObject;
 
     public boolean isDead(){
         return this.lifetime < System.currentTimeMillis();
     }
 
-    public DTOObject(String something){
+    public DTOObject(){
         this.id = CacheTop.inc();
-        this.lifetime += System.currentTimeMillis();
-        this.someObject = new SomeObject(something);
+        this.lifetime = System.currentTimeMillis() + 20000L;
+        //this.someObject = new SomeObject(something);
+    }
+
+    public DTOObject(long id){
+        this.id = id;
+        this.lifetime = System.currentTimeMillis() + 20000L;
+        //this.someObject = new SomeObject(something);
     }
 
     public DTOObject(String something, Long lifetime){
         this.id = CacheTop.inc();
         this.lifetime = lifetime + System.currentTimeMillis();
-        this.someObject = new SomeObject(something);
+       // this.someObject = new SomeObject(something);
     }
 
     public long getLifetime() {
         return lifetime;
     }
 
-    public SomeObject getSomeObject() {
-        return someObject;
-    }
+  // public SomeObject getSomeObject() {
+      //  return someObject;
+   // }
 
-    public void setSomeObject(SomeObject someObject) {
-        this.someObject = someObject;
-    }
+   // public void setSomeObject(SomeObject someObject) {
+   //     this.someObject = someObject;
+    //}
 
     public long getId() {
         return id;
     }
 
-    public boolean equals(DTOObject dtoObject){
-        return dtoObject != null && dtoObject.getClass() == DTOObject.class ? v(dtoObject.getSomeObject()) : false;
+    @Override
+    public boolean equals(Object dtoObject){
+        return dtoObject != null && dtoObject.getClass() == DTOObject.class ? this.lifetime == ((DTOObject) dtoObject).getLifetime() && this.getId() == ((DTOObject) dtoObject).getId() : false;
 
-    }
-
-    boolean v(SomeObject someObject){
-        return someObject != null ? someObject.equals(this.someObject) : false;
     }
 
     @Override
     public String toString(){
-        return new StringBuilder().append("[").append(this.someObject.toString()).append(": ").append(id).append("]").toString();
+        return new StringBuilder().append("[").append(id).append("]").toString();
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
-        return 17 * prime + (this.someObject != null ? this.someObject.hashCode() : 0);
+        return this.id != 0 ? 17 * prime : 0;
     }
 
 }

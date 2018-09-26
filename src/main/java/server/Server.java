@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import util.DTOObject;
+import util.SomeObject;
 
 import java.net.*;
 import java.io.*;
@@ -31,12 +32,11 @@ public class Server {
 
             ApplicationContext context = new AnnotationConfigApplicationContext(CacheCFG.class);
             CacheTop cacheTop = context.getBean(CacheTop.class);
+
             String line = null;
             while(true) {
-                logger.info(cacheTop.toString());
-
+                //logger.info(cacheTop.toString());
                 line = in.readUTF(); // ожидаем пока клиент пришлет строку текста.
-                cacheTop.put(new DTOObject(line), line.concat(line));
                 out.writeUTF(line); // отсылаем клиенту обратно ту самую строку текста.
                 out.flush(); // заставляем поток закончить передачу данных.
                 //logger.info(cacheTop.toString());
